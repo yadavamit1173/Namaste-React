@@ -3,6 +3,17 @@
 import { createBrowserRouter , RouterProvider } from "react-router-dom";
 import Error from "./components/Error";
 
+const Error=()=>{
+    return (
+        <>
+        <h1>opps!!</h1>
+        <h2>Arre Bc ye error aagya</h2>
+        </>
+    );
+};
+export default Error;
+
+
 const appRouter=createBrowserRouter([
   {
     path :"/",
