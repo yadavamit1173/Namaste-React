@@ -1,0 +1,21 @@
+// error routing 
+
+import { createBrowserRouter , RouterProvider } from "react-router-dom";
+import Error from "./components/Error";
+
+const appRouter=createBrowserRouter([
+  {
+    path :"/",
+    element : <AppLayout />,
+    errorElement:<Error /> //--------------------------------here is the -----------
+  },
+  {
+    path:"/about",
+    element:<About />,
+  }
+]);
+
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+
+root.render(<RouterProvider router={appRouter} />);
