@@ -23,9 +23,6 @@ const Body = () => {
     // API call
     getRestaurants();
   }, []);
-//----------
-
-//=====
 
   async function getRestaurants() {
     const data = await fetch(
