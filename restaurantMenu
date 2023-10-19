@@ -1,0 +1,73 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { IMG_CDN_URL } from "./contants";
+import Shimmer from "./Shimmer";
+const RestaurantMenu = () => {
+  // how to read a dynamic URL params
+  const { resId } = useParams();
+  // Use proper names
+  const [restaurant, setRestauraunt] = useState(null);
+  useEffect(() => {
+    getRestaurantInfo();
+  }, []);
+
+//--------------------------------------------------------
+
+  async function getRestaurantInfo() {
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/menu/v4/full?lat=12.9351929&lng=77.62448069999999&menuId=" +
+        resId
+    );
+    const json = await data.json();
+    console.log(json.data);
+    setRestauraunt(json.data);
+  }
+  return !restaurant ? (
+    <Shimmer />
+  ) : (
+    <div className="menu">
+      <div>
+        <h1>Restraunt id: {resId}</h1>
+        <h2>{restaurant?.name}</h2>
+        <img src={IMG_CDN_URL + restaurant?.cloudinaryImageId} />
+        <h3>{restaurant?.area}</h3>
+        <h3>{restaurant?.city}</h3>
+        <h3>{restaurant?.avgRating} stars</h3>
+        <h3>{restaurant?.costForTwoMsg}</h3>
+      </div>
+      <div>
+        <h1>Menu</h1>
+        <ul>
+          {Object.values(restaurant?.menu?.items).map((item) => (
+            <li key={item.id}>{item.name}</li>
+/*----------------------------------------------------------------
+restaurant?.menu?.items: This part of the code accesses the menu property of the restaurant object.
+The ? is the optional chaining operator in JavaScript, which allows you to access properties of an object
+without the risk of encountering a TypeError if any part of the property chain is null or undefined. So, if
+restaurant or menu is null or undefined, the code won't throw an error.
+
+Object.values(restaurant?.menu?.items): This converts the values of the items property of the menu object
+into an array. Object.values() is a JavaScript method that returns an array of a given object's own enumerable 
+property values. It's used here to ensure that we're working with an array-like structure.
+
+.map((item) => ()): The map() method is called on the array of items. It iterates over each item in the array
+and performs an operation on each item. In this case, it's generating a list item (<li>) for each item in the array.
+
+<li key={item.id}>{item.name}</li>: This part of the code represents each item in the array as a list item. It
+uses the key prop to uniquely identify each list item. React uses the key prop to optimize the rendering of components
+in a list. item.id is used as the key. Additionally, {item.name} displays the name property of each item inside the list item.
+
+In summary, this line of code is mapping over the items in the restaurant object's menu, creating a list item for each 
+item's name property. The optional chaining (?.) ensures that the code doesn't throw errors if any intermediate properti
+es are null or undefined.
+
+------------------------------------------------------------------*/
+
+
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+};
+export default RestaurantMenu;
