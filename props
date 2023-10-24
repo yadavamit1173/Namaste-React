@@ -1,0 +1,58 @@
+import React from "react";
+/*-------------props pass is complusry----------*/
+const Profile=(props)=>{
+    return(
+    //-------------------------------
+        <h1>HI THIS IS : {props.Name}</h1>
+    )
+}
+//------class component----------
+export default Profile ;
+
+import React from "react";
+
+class Profilee extends React.Component{
+    render(){
+        return (
+            <>//-----------this is necesaya or div
+            <h1> class</h1>
+            <h2>see this{this.props.name}</h2>
+            </>
+        )
+    };
+};
+//---------------about.js--------------------
+export default Profilee;
+
+// import food from "../Images/burger-image.png";
+import { Link } from "react-router-dom";
+import Logo from "../assets/img/namaste.png"
+import { Outlet } from "react-router-dom";
+import Profilee from "./ProfileClass";
+import Profile from "../Profile";
+
+const About = () => {
+  return (
+    <div className="about-container">
+      <div className="about-left">
+        <h1>
+          Welcome to <br /> The world of <br /> <span>Tasty & Fresh Food</span>
+        </h1>
+        <h4>
+          "Better you will feel if you eat a Food<span>Fire</span> healthy meal"
+        </h4><br />
+        <Link to="/"><h3 className="about-home"><span>Home</span></h3></Link>
+      </div>
+      <Outlet />
+      <div className="about-right">
+        <img src={Logo}alt="Food Image" />
+       
+      </div>
+      //-------------------------------------------------
+      <Profilee name={"class wala props"}/>
+      <Profile Name="fuction wala props" />
+    </div>
+  );
+};
+
+export default About;
